@@ -1,31 +1,62 @@
 package com.example.handysouls;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
+	weapon[] fist;
+	weapon[] hammers;
+	weapon[] greatHammers;
+	weapon[] axes;
+	weapon[] greataxes;
+	weapon[] daggers;
+	weapon[] thrustingSwords;
+	weapon[] straightSwords;
+	weapon[] greatSwords;
+	weapon[] ultraGreatSwords;
+	weapon[] katanas;
+	weapon[] curvedSwords;
+	weapon[] curvedGreatSwords;
+	weapon[] spears;
+	weapon[] halberds;
+	weapon[] bows;
+	weapon[] crossbows;
+	weapon[] greatbows;
+	weapon[] whips;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        //FrameLayout start = (FrameLayout) findViewById(R.id.start_screen_group);
+        Button enter = (Button) findViewById(R.id.move_on);
+        enter.setOnClickListener(new OnClickListener() {
 
-        if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+			@Override
+			public void onClick(View v) {
+				FrameLayout start = (FrameLayout) findViewById(R.id.start_screen_group);
+				start.setVisibility(View.GONE);
+				RelativeLayout next = (RelativeLayout) findViewById(R.id.weapon_list_group);
+				next.setVisibility(View.VISIBLE);
+			}
+        	
+        });
     }
-
-
+    
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -60,6 +91,20 @@ public class MainActivity extends Activity {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             return rootView;
         }
+    }
+    
+    public class weapon {
+    	public String name;
+    	public Bitmap img;
+    	public String damage;
+    	public String durability;
+    	public String weight;
+    	public String statsNeeded;
+    	public String statBonuses;
+    	public String availability;
+    	public String specialNote;
+    	
+    	public weapon() {}
     }
 
 }
