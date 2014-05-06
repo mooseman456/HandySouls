@@ -3,6 +3,7 @@ package com.example.handysouls;
 import android.app.Fragment;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
@@ -39,6 +39,8 @@ public class MainActivity extends ListActivity {
 	weapon[] whips;
 	
 	String[] cats;
+	
+	int activityID = 0xFACE;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,98 +128,98 @@ public class MainActivity extends ListActivity {
     		nameCat.setText(cats[position]);
     		switch(position) {
     		case 0:
-    			URL = "";
-    			wArray = axes;
+    			URL = "http://darksouls.wikidot.com/axes";
+    			wArray = new weapon[6];
     			toastText = "axes";
     			break;
     		case 1:
-    			URL = "";
-    			wArray = bows;
+    			URL = "http://darksouls.wikidot.com/bows";
+    			wArray = new weapon[5];
     			toastText = "bows";
     			break;
     		case 2:
-    			URL = "";
-    			wArray = crossbows;
+    			URL = "http://darksouls.wikidot.com/crossbows";
+    			wArray = new weapon[4];
     			toastText = "crossbows";
     			break;
     		case 3:
-    			URL = "";
-    			wArray = curvedGreatswords;
+    			URL = "http://darksouls.wikidot.com/curved-greatswords";
+    			wArray = new weapon[3];
     			toastText = "curved greatswords";
     			break;
     		case 4:
-    			URL = "";
-    			wArray = curvedSwords;
+    			URL = "http://darksouls.wikidot.com/curved-swords";
+    			wArray = new weapon[7];
     			toastText = "curved swords";
     			break;
     		case 5:
-    			URL = "";
-    			wArray = daggers;
+    			URL = "http://darksouls.wikidot.com/daggers";
+    			wArray = new weapon[6];
     			toastText = "daggers";
     			break;
     		case 6:
-    			URL = "";
-    			wArray = fist;
+    			URL = "http://darksouls.wikidot.com/fist";
+    			wArray = new weapon[5];
     			toastText = "first";
     			break;
     		case 7:
-    			URL = "";
-    			wArray = greatbows;
+    			URL = "http://darksouls.wikidot.com/greatbows";
+    			wArray = new weapon[2];
     			toastText = "greatbows";
     			break;
     		case 8:
-    			URL = "";
-    			wArray = greatswords;
+    			URL = "http://darksouls.wikidot.com/greatswords";
+    			wArray = new weapon[13];
     			toastText = "greatswords";
     			break;
     		case 9:
-    			URL = "";
-    			wArray = greatAxes;
+    			URL = "http://darksouls.wikidot.com/greataxes";
+    			wArray = new weapon[5];
     			toastText = "great axes";
     			break;
     		case 10:
-    			URL = "";
-    			wArray = greatHammers;
+    			URL = "http://darksouls.wikidot.com/great-hammers";
+    			wArray = new weapon[6];
     			toastText = "great hammers";
     			break;
     		case 11:
-    			URL = "";
-    			wArray = halberds;
+    			URL = "http://darksouls.wikidot.com/halberds";
+    			wArray = new weapon[9];
     			toastText = "halberds";
     			break;
     		case 12:
-    			URL = "";
-    			wArray = hammers;
+    			URL = "http://darksouls.wikidot.com/hammers";
+    			wArray = new weapon[9];
     			toastText = "hammers";
     			break;
     		case 13:
-    			URL = "";
-    			wArray = katanas;
+    			URL = "http://darksouls.wikidot.com/katanas";
+    			wArray = new weapon[4];
     			toastText = "katanas";
     			break;
     		case 14:
-    			URL = "";
-    			wArray = spears;
+    			URL = "http://darksouls.wikidot.com/spears";
+    			wArray = new weapon[10];
     			toastText = "spears";
     			break;
     		case 15:
-    			URL = "";
-    			wArray = straightSwords;
+    			URL = "http://darksouls.wikidot.com/straightswords";
+    			wArray =  new weapon[13];
     			toastText = "straight swords";
     			break;
     		case 16:
-    			URL = "";
-    			wArray = thrustingSwords;
+    			URL = "http://darksouls.wikidot.com/thrusting-swords";
+    			wArray = new weapon[5];
     			toastText = "thrusting swords";
     			break;
     		case 17:
-    			URL = "";
-    			wArray = ultraGreatswords;
+    			URL = "http://darksouls.wikidot.com/ultra-greatswords";
+    			wArray = new weapon[5];
     			toastText = "ultra greatswords";
     			break;
     		case 18:
-    			URL = "";
-    			wArray = whips;
+    			URL = "http://darksouls.wikidot.com/whips";
+    			wArray = new weapon[3];
     			toastText = "whips";
     			break;
     		default:
@@ -226,7 +228,7 @@ public class MainActivity extends ListActivity {
     			toastText = "Unknown Category";
     			break;
     		}
-    		categoryPicked click = new categoryPicked(toastText, wArray);
+    		categoryPicked click = new categoryPicked(URL, wArray);
     		nameCat.setOnClickListener(click);
     		return view;
     	}
@@ -246,6 +248,10 @@ public class MainActivity extends ListActivity {
 			// TODO Auto-generated method stub
 			Toast toast = Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG);
 			toast.show();
+			Intent i = new Intent(getApplicationContext(), WeaponList.class);
+			i.putExtra("URL", URL);
+			i.putExtra("WEAPON_ARRAY", wArray);
+			startActivityForResult(i, 1);
 			
 		}
     	//Intent intent = new Intent(this, WeaponCategory.class);
