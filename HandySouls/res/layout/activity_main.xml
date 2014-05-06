@@ -45,7 +45,6 @@
 	        />
 	    <ListView
 	        android:layout_below="@id/test_text"
-	        android:textColor="#FFFFFFFF" 
 	        android:id="@android:id/list"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"/>

@@ -47,7 +47,7 @@ public class MainActivity extends ListActivity {
         //FrameLayout start = (FrameLayout) findViewById(R.id.start_screen_group);
         Button enter = (Button) findViewById(R.id.move_on);
         cats = getResources().getStringArray(R.array.category_names);
-        setListAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, cats));
+        setListAdapter(new catListAdapter(this));
         enter.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -103,9 +103,11 @@ public class MainActivity extends ListActivity {
     	Context context;
     	public catListAdapter(Context context) {
     		super(context, R.layout.cat_list, cats);
+    		this.context = context;
     	}
     	
-    	@Override View getView(final int position, View convertView, ViewGroup parent) {
+    	@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
     		View view;
     		String URL;
     		weapon[] wArray;
@@ -118,7 +120,7 @@ public class MainActivity extends ListActivity {
     			view = convertView;
     		}
     		
-    		TextView nameCat = (TextView) view.findViewById(R.id.cat_name);
+    		Button nameCat = (Button) view.findViewById(R.id.cat_name);
     		
     		String toastText;
     		nameCat.setText(cats[position]);
@@ -219,16 +221,33 @@ public class MainActivity extends ListActivity {
     			toastText = "whips";
     			break;
     		default:
+    			URL = "failed";
+    			wArray = fist;
     			toastText = "Unknown Category";
-    			
     			break;
     		}
-    		Toast toast = Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT);
-			toast.show();
+    		categoryPicked click = new categoryPicked(toastText, wArray);
+    		nameCat.setOnClickListener(click);
+    		return view;
     	}
     }
     
-    public void categoryPicked(String URL, weapon[] wArray) {
+    public class categoryPicked implements OnClickListener {
+    	
+    	private String URL;
+    	private weapon[] wArray;   	
+    	
+    	public categoryPicked (String URL, weapon[] wArray) {
+    		this.URL = URL;
+    		this.wArray = wArray;
+    	}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Toast toast = Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG);
+			toast.show();
+			
+		}
     	//Intent intent = new Intent(this, WeaponCategory.class);
     	
     }
