@@ -2,8 +2,7 @@ package com.example.handysouls;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Bitmap;
-import android.opengl.Visibility;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -71,7 +70,7 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.developer_name) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -93,18 +92,9 @@ public class MainActivity extends Activity {
         }
     }
     
-    public class weapon {
-    	public String name;
-    	public Bitmap img;
-    	public String damage;
-    	public String durability;
-    	public String weight;
-    	public String statsNeeded;
-    	public String statBonuses;
-    	public String availability;
-    	public String specialNote;
+    public void categoryPicked(String URL, weapon[] wArray) {
+    	//Intent intent = new Intent(this, WeaponCategory.class);
     	
-    	public weapon() {}
     }
-
+    
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="category_names">
+        <item>Axes</item>
+        <item>Bows</item>
+        <item>Crossbows</item>
+        <item>Curved Greatswords</item>
+        <item>Curved Swords</item>
+        <item>Daggers</item>
+        <item>Fist Weapons</item>
+        <item>Greatbows</item>
+        <item>Greatswords</item>
+        <item>Great Axes</item>
+        <item>Great Hammers</item>
+        <item>Halberds</item>
+        <item>Hammers</item>
+        <item>Katanas</item>
+        <item>Spears</item>
+        <item>Straight Swords</item>
+        <item>Thrusting Swords</item>
+        <item>Ultra Greatswords</item>
+        <item>Whips</item>
+    </string-array>
+</resources>
