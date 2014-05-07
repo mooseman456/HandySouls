@@ -248,7 +248,6 @@ public class MainActivity extends ListActivity {
 			// TODO Auto-generated method stub
 			Intent i = new Intent(getApplicationContext(), WeaponList.class);
 			i.putExtra("URL", URL);
-			i.putExtra("WEAPON_ARRAY", wArray);
 			startActivity(i);
 			
 		}

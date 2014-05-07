@@ -4,15 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class weapon implements Parcelable{
-	public String name;
-	public String imgLoc;
-	public String damage;
-	public String durability;
-	public String weight;
-	public String statsNeeded;
-	public String statBonuses;
-	public String availability;
-	public String specialNote;
+	public String name = "";
+	public String imgLoc = "";
+	public String damage = "";
+	public String durability = "";
+	public String weight = "";
+	public String statsNeeded = "";
+	public String statBonuses = "";
+	public String availability = "";
+	public String specialNote = "";
 	
 	public weapon() {}
 	
