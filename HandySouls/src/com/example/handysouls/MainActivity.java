@@ -246,12 +246,10 @@ public class MainActivity extends ListActivity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			Toast toast = Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG);
-			toast.show();
 			Intent i = new Intent(getApplicationContext(), WeaponList.class);
 			i.putExtra("URL", URL);
 			i.putExtra("WEAPON_ARRAY", wArray);
-			startActivityForResult(i, 1);
+			startActivity(i);
 			
 		}
     	//Intent intent = new Intent(this, WeaponCategory.class);

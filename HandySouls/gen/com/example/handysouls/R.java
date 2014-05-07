@@ -29,10 +29,11 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090008;
-        public static final int cat_name=0x7f090006;
+        public static final int action_settings=0x7f090009;
+        public static final int cat_name=0x7f090007;
+        public static final int chicken=0x7f090006;
         public static final int container=0x7f090000;
-        public static final int developer_name=0x7f090007;
+        public static final int developer_name=0x7f090008;
         public static final int move_on=0x7f090003;
         public static final int start_logo=0x7f090002;
         public static final int start_screen_group=0x7f090001;

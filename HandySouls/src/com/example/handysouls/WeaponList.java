@@ -1,15 +1,15 @@
 package com.example.handysouls;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.Toast;
 
 public class WeaponList extends Activity {
 
@@ -17,11 +17,14 @@ public class WeaponList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_weapon_list);
-
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		String URL = bundle.getString("URL");
+		weapon[] w = (weapon[])bundle.getParcelableArray("WEAPON_ARRAY");
+		w[0] = new weapon();
+		w[0].availability = "POOP";
+		Toast toast = Toast.makeText(getApplicationContext(), w[0].availability, Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 	@Override
