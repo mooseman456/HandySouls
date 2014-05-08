@@ -54,7 +54,7 @@ public class MainActivity extends ListActivity {
 
 			@Override
 			public void onClick(View v) {
-				FrameLayout start = (FrameLayout) findViewById(R.id.start_screen_group);
+				RelativeLayout start = (RelativeLayout) findViewById(R.id.start_screen_group);
 				start.setVisibility(View.GONE);
 				RelativeLayout next = (RelativeLayout) findViewById(R.id.weapon_list_group);
 				next.setVisibility(View.VISIBLE);

@@ -7,7 +7,7 @@
     tools:ignore="MergeRootFrame" 
     android:background="#FF000000">
     
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/start_screen_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,8 +17,9 @@
 	        android:src="@drawable/ds_logo"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="top"
+	        android:layout_alignParentTop="true"
 	        />
+	    
 	    <Button
 	        android:id="@+id/move_on"
 	        android:layout_width="wrap_content"
@@ -26,9 +27,18 @@
 			android:text="@string/prepare"
 			android:textColor="#FFDDDDDD"
 			android:textSize="40sp"
-			android:layout_gravity="center"
+			android:layout_centerInParent="true"
 	        />
-    </FrameLayout>
+	    <TextView 
+	        android:id="@+id/start_tag_line"
+	        android:layout_below="@id/start_logo"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#FFFFFFFF"
+	        android:textSize="50sp"
+	        android:paddingTop="10dp"
+	        android:text="@string/tag"/>
+    </RelativeLayout>
     <RelativeLayout 
         android:id="@+id/weapon_list_group"
         android:layout_width="match_parent"
@@ -38,7 +48,7 @@
 	        android:id="@+id/test_text"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="YOU DIED"
+	        android:text="@string/top"
 	        android:textColor="#DDDD2222"
 	        android:textSize="80sp"
 	        android:layout_gravity="center"

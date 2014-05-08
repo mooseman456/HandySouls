@@ -27,16 +27,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class WeaponList extends ListActivity {
 	ArrayList<weapon> mWArray;
 	RelativeLayout container;
-	RelativeLayout weaponView;
+	ScrollView weaponView;
+	Button back;
 	
 	ImageView img;
 	TextView name;
@@ -46,6 +48,7 @@ public class WeaponList extends ListActivity {
 	TextView weight;
 	TextView specialNote;
 	TextView requirements;
+	TextView bonuses;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,7 @@ public class WeaponList extends ListActivity {
 		setContentView(R.layout.activity_weapon_list);
 		
 		container = (RelativeLayout)findViewById(R.id.weapon_list_container);
-		weaponView = (RelativeLayout)findViewById(R.id.weapon_page);
+		weaponView = (ScrollView)findViewById(R.id.weapon_page_container);
 		img = (ImageView)findViewById(R.id.weapon_image);
 		name = (TextView)findViewById(R.id.weapon_name);
 		availability = (TextView)findViewById(R.id.availability);
@@ -62,6 +65,8 @@ public class WeaponList extends ListActivity {
 		durability = (TextView)findViewById(R.id.durability);
 		specialNote = (TextView)findViewById(R.id.special);
 		requirements = (TextView)findViewById(R.id.reqs);
+		bonuses = (TextView)findViewById(R.id.bonus);
+		back = (Button)findViewById(R.id.back_button);
 		
 		mWArray = new ArrayList<weapon>();
 		Intent intent = getIntent();
@@ -88,11 +93,6 @@ public class WeaponList extends ListActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-	
-	public void back(View v) {
-		container.setVisibility(View.VISIBLE);
-		weaponView.setVisibility(View.GONE);
 	}
 	
 	public class weaponList extends ArrayAdapter<weapon> {
@@ -192,7 +192,7 @@ public class WeaponList extends ListActivity {
 						mWArray.get(numWeaps).name = row.child(1).text();
 						mWArray.get(numWeaps).damage = row.child(2).text();
 						mWArray.get(numWeaps).durability = row.child(4).text();
-						mWArray.get(numWeaps).weight = row.child(5).text();mWArray.get(numWeaps).weight = row.child(4).text();
+						mWArray.get(numWeaps).weight = row.child(5).text();
 						
 						parseReqs = row.child(6).text();
 						int spaceLoc = parseReqs.indexOf(" ");
@@ -242,6 +242,18 @@ public class WeaponList extends ListActivity {
 			// TODO Auto-generated method stub
 			container.setVisibility(View.GONE);
 			weaponView.setVisibility(View.VISIBLE);
+			back.setVisibility(View.VISIBLE);
+			back.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					container.setVisibility(View.VISIBLE);
+					weaponView.setVisibility(View.GONE);
+					back.setVisibility(View.GONE);
+				}
+				
+			});
 			
 			img.setImageBitmap(w.img);
 			name.setText(w.name);
@@ -251,6 +263,9 @@ public class WeaponList extends ListActivity {
 			damage.setText(w.damage);
 			specialNote.setText(w.specialNote);
 			requirements.setText(w.statsNeeded);
+			bonuses.setText(w.statBonuses);
+			
+			
 		}
     	//Intent intent = new Intent(this, WeaponCategory.class);
     	

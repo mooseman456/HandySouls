@@ -18,6 +18,7 @@
         android:textColor="#FFFFFFFF"
         android:textSize="30sp"
         android:layout_toRightOf="@id/weapon_image"
+        android:drawable="@android:drawable/list_selector_background"
         />
    
 
