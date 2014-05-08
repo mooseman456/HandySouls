@@ -15,6 +15,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,19 +24,30 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class WeaponList extends ListActivity {
 	ArrayList<weapon> mWArray;
+	RelativeLayout container;
+	RelativeLayout weaponView;
+	ImageView img;
+	TextView name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_weapon_list);
+		container = (RelativeLayout)findViewById(R.id.weapon_list_container);
+		weaponView = (RelativeLayout)findViewById(R.id.weapon_page);
+		img = (ImageView)findViewById(R.id.weapon_image);
+		name = (TextView)findViewById(R.id.weapon_name);
 		mWArray = new ArrayList<weapon>();
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
@@ -66,6 +79,11 @@ public class WeaponList extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void back(View v) {
+		container.setVisibility(View.VISIBLE);
+		weaponView.setVisibility(View.GONE);
+	}
+	
 	public class weaponList extends ArrayAdapter<weapon> {
     	Context context;
     	public weaponList(Context context) {
@@ -89,9 +107,16 @@ public class WeaponList extends ListActivity {
     		TextView nameCat = (TextView) view.findViewById(R.id.weapon_name);
     		
     		String toastText;
-    		nameCat.setText(mWArray.get(position).name);
     		
-    		nameCat.setCompoundDrawables(mWArray.get(position).img, null, null, null);
+    		nameCat.setText(mWArray.get(position).name);
+    		Drawable d = new BitmapDrawable(getResources(),mWArray.get(position).img);
+    		ImageView v = (ImageView)view.findViewById(R.id.weapon_image);
+    		v.setImageBitmap(mWArray.get(position).img);
+    		
+    		weaponPicked wp = new weaponPicked(mWArray.get(position));
+    		view.setOnClickListener(wp);
+    		//d.setBounds(10, 10, 10, 10);
+    		//nameCat.setCompoundDrawables(d, null, null, null);
     		return view;
     	}
 	}
@@ -159,5 +184,26 @@ public class WeaponList extends ListActivity {
 		}
 		
 	}
+	
+	public class weaponPicked implements OnClickListener {
+    	
+    	private weapon w;   	
+    	
+    	public weaponPicked (weapon w) {
+    		this.w = w;
+    	}
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			container.setVisibility(View.GONE);
+			weaponView.setVisibility(View.VISIBLE);
+			
+			img.setImageBitmap(w.img);
+			name.setText(w.name);
+			
+		}
+    	//Intent intent = new Intent(this, WeaponCategory.class);
+    	
+    }
 
 }
