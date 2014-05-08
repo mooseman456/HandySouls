@@ -1,13 +1,20 @@
 package com.example.handysouls;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
-import android.app.Fragment;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,12 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import org.jsoup.*;
-import org.jsoup.nodes.Document;
-import org.jsoup.parser.*;
 
 public class WeaponList extends ListActivity {
 	ArrayList<weapon> mWArray;
@@ -35,7 +39,7 @@ public class WeaponList extends ListActivity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		String URL = bundle.getString("URL");
-		
+		new GetParseWeapons().execute(URL);
 		
 		Toast toast = Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG);
 		toast.show();
@@ -61,29 +65,11 @@ public class WeaponList extends ListActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_weapon_list,
-					container, false);
-			return rootView;
-		}
-	}
 	
 	public class weaponList extends ArrayAdapter<weapon> {
     	Context context;
     	public weaponList(Context context) {
-    		super(context, R.layout.cat_list, mWArray);
-    		Log.d("JSA", "weaponList constructor");
+    		super(context, R.layout.weapon_row, mWArray);
     		this.context = context;
     	}
     	
@@ -94,41 +80,82 @@ public class WeaponList extends ListActivity {
     		LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     		Log.d("JSA", "Inside getView");
     		if (convertView == null) {
-    			view = mInflater.inflate(R.layout.cat_list, parent, false);
+    			view = mInflater.inflate(R.layout.weapon_row, parent, false);
     		}
     		else {
     			view = convertView;
     		}
     		
-    		Button nameCat = (Button) view.findViewById(R.id.cat_name);
+    		TextView nameCat = (TextView) view.findViewById(R.id.weapon_name);
     		
     		String toastText;
     		nameCat.setText(mWArray.get(position).name);
+    		
+    		nameCat.setCompoundDrawables(mWArray.get(position).img, null, null, null);
     		return view;
     	}
 	}
 	
-	private class GetParseWeapons extends AsyncTask<String, Integer, Bitmap> {
+	public Bitmap loadImageFromNetwork(String imgUrl) {
+    	Bitmap img = null;
+    	URL url;
+    	try {
+    			url = new URL(imgUrl);
+    			img = BitmapFactory.decodeStream(url.openStream());
+    	} catch (MalformedURLException e){
+    		Log.e("JSA", "URL is bad");
+    		e.printStackTrace();
+    	} catch (IOException e){
+    		Log.e("JSA", "Failed to decode Bitmap");
+    		e.printStackTrace();
+    	}
+    	return img;
+    }
+	
+	private class GetParseWeapons extends AsyncTask<String, Integer, ArrayList<weapon>> {
 
 		@Override
-		protected Bitmap doInBackground(String... Url) {
+		protected ArrayList<weapon> doInBackground(String... Url) {
 			// TODO Auto-generated method stub
 			try {
+				int numWeaps = 0;
+				boolean first = true;
 				Document doc = Jsoup.connect(Url[0]).get();
-				Elements weapons = doc.select("");
+				Elements weapons = doc.select("table.wiki-content-table tbody tr");
+				String imgLoc;
+				for (Element row : weapons) {
+					if (!first) {
+						mWArray.add(new weapon());
+						
+						imgLoc = row.child(0).childNode(0).attr("src");
+						mWArray.get(numWeaps).imgLoc = imgLoc;
+						mWArray.get(numWeaps).img = loadImageFromNetwork(imgLoc);
+						mWArray.get(numWeaps).name = row.child(1).text();
+						mWArray.get(numWeaps).damage = row.child(2).text();
+						mWArray.get(numWeaps).durability = row.child(3).text();
+						mWArray.get(numWeaps).weight = row.child(4).text();
+						mWArray.get(numWeaps).availability = row.child(6).text();
+						mWArray.get(numWeaps).specialNote = row.child(7).text();
+						numWeaps++;
+					}
+					else
+						first = false;
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return null;
+			return mWArray;
 		}
 		
 		protected void onProgressUpdate(Integer... values){
 			
 		}
 		
-		protected void onPostExecute(Bitmap result) {
-			
+		protected void onPostExecute(ArrayList<weapon> array) {
+			setListAdapter(new weaponList(getApplicationContext()));
+			ProgressBar spinnyThing = (ProgressBar)findViewById(R.id.spinny_bar);
+			spinnyThing.setVisibility(View.INVISIBLE);
 		}
 		
 	}

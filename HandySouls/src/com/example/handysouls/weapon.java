@@ -1,11 +1,14 @@
 package com.example.handysouls;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class weapon implements Parcelable{
 	public String name = "";
 	public String imgLoc = "";
+	public Bitmap img;
 	public String damage = "";
 	public String durability = "";
 	public String weight = "";
