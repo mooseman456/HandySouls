@@ -7,5 +7,13 @@
     <string name="prepare">PREPARE TO DIE</string>
     <string name="dev_name">Developer: Joe St. Angelo</string>
     <string name="title_activity_weapon_list">WeaponList</string>
+    <string name="acquired">Acquired by: </string>
+    <string name="notes">Special Notes: </string>
+    <string name="damage">Strength/Dex/Faith/Int Dmg:</string>
+    <string name="reqs">Str/Dex/Faith/Int Prereqs: </string>
+    <string name="durability">Durability: </string>
+    <string name="weight">Weight: </string>
+    <string name="back">Back</string>
+    <string name="special">Special Note: </string>
 
 </resources>

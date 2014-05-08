@@ -37,26 +37,37 @@ public class WeaponList extends ListActivity {
 	ArrayList<weapon> mWArray;
 	RelativeLayout container;
 	RelativeLayout weaponView;
+	
 	ImageView img;
 	TextView name;
+	TextView availability;
+	TextView durability;
+	TextView damage;
+	TextView weight;
+	TextView specialNote;
+	TextView requirements;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_weapon_list);
+		
 		container = (RelativeLayout)findViewById(R.id.weapon_list_container);
 		weaponView = (RelativeLayout)findViewById(R.id.weapon_page);
 		img = (ImageView)findViewById(R.id.weapon_image);
 		name = (TextView)findViewById(R.id.weapon_name);
+		availability = (TextView)findViewById(R.id.availability);
+		weight = (TextView)findViewById(R.id.weight);
+		damage = (TextView)findViewById(R.id.damage);
+		durability = (TextView)findViewById(R.id.durability);
+		specialNote = (TextView)findViewById(R.id.special);
+		requirements = (TextView)findViewById(R.id.reqs);
+		
 		mWArray = new ArrayList<weapon>();
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		String URL = bundle.getString("URL");
 		new GetParseWeapons().execute(URL);
-		
-		Toast toast = Toast.makeText(getApplicationContext(), URL, Toast.LENGTH_LONG);
-		toast.show();
-		//setListAdapter(new weaponList(this));
 	}
 
 	@Override
@@ -114,6 +125,7 @@ public class WeaponList extends ListActivity {
     		v.setImageBitmap(mWArray.get(position).img);
     		
     		weaponPicked wp = new weaponPicked(mWArray.get(position));
+    		v.setClickable(true);
     		view.setOnClickListener(wp);
     		//d.setBounds(10, 10, 10, 10);
     		//nameCat.setCompoundDrawables(d, null, null, null);
@@ -137,7 +149,7 @@ public class WeaponList extends ListActivity {
     	return img;
     }
 	
-	private class GetParseWeapons extends AsyncTask<String, Integer, ArrayList<weapon>> {
+	private class GetParseWeapons extends AsyncTask<String, String, ArrayList<weapon>> {
 
 		@Override
 		protected ArrayList<weapon> doInBackground(String... Url) {
@@ -145,11 +157,13 @@ public class WeaponList extends ListActivity {
 			try {
 				int numWeaps = 0;
 				boolean first = true;
+				boolean bad = false;
 				Document doc = Jsoup.connect(Url[0]).get();
 				Elements weapons = doc.select("table.wiki-content-table tbody tr");
 				String imgLoc;
+				String parseReqs;
 				for (Element row : weapons) {
-					if (!first) {
+					if (!first && !bad) {
 						mWArray.add(new weapon());
 						
 						imgLoc = row.child(0).childNode(0).attr("src");
@@ -159,12 +173,44 @@ public class WeaponList extends ListActivity {
 						mWArray.get(numWeaps).damage = row.child(2).text();
 						mWArray.get(numWeaps).durability = row.child(3).text();
 						mWArray.get(numWeaps).weight = row.child(4).text();
+						
+						parseReqs = row.child(5).text();
+						int spaceLoc = parseReqs.indexOf(" ");
+						mWArray.get(numWeaps).statBonuses = parseReqs.substring(spaceLoc);
+						mWArray.get(numWeaps).statsNeeded = parseReqs.substring(0, spaceLoc);
+						
 						mWArray.get(numWeaps).availability = row.child(6).text();
 						mWArray.get(numWeaps).specialNote = row.child(7).text();
 						numWeaps++;
 					}
-					else
+					else if(!first && bad){
+						mWArray.add(new weapon());
+						
+						imgLoc = row.child(0).childNode(0).attr("src");
+						mWArray.get(numWeaps).imgLoc = imgLoc;
+						mWArray.get(numWeaps).img = loadImageFromNetwork(imgLoc);
+						mWArray.get(numWeaps).name = row.child(1).text();
+						mWArray.get(numWeaps).damage = row.child(2).text();
+						mWArray.get(numWeaps).durability = row.child(4).text();
+						mWArray.get(numWeaps).weight = row.child(5).text();mWArray.get(numWeaps).weight = row.child(4).text();
+						
+						parseReqs = row.child(6).text();
+						int spaceLoc = parseReqs.indexOf(" ");
+						mWArray.get(numWeaps).statBonuses = parseReqs.substring(spaceLoc);
+						mWArray.get(numWeaps).statsNeeded = parseReqs.substring(0, spaceLoc);
+						
+						mWArray.get(numWeaps).availability = row.child(7).text();
+						mWArray.get(numWeaps).specialNote = row.child(8).text();
+						numWeaps++;
+					}
+					else {
 						first = false;
+						if (row.child(3).text().compareTo("Durability") != 0)
+							bad = true;
+						
+					}
+						
+						
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -173,8 +219,7 @@ public class WeaponList extends ListActivity {
 			return mWArray;
 		}
 		
-		protected void onProgressUpdate(Integer... values){
-			
+		protected void onProgressUpdate(String... values){
 		}
 		
 		protected void onPostExecute(ArrayList<weapon> array) {
@@ -200,7 +245,12 @@ public class WeaponList extends ListActivity {
 			
 			img.setImageBitmap(w.img);
 			name.setText(w.name);
-			
+			availability.setText(w.availability);
+			durability.setText(w.durability);
+			weight.setText(w.weight);
+			damage.setText(w.damage);
+			specialNote.setText(w.specialNote);
+			requirements.setText(w.statsNeeded);
 		}
     	//Intent intent = new Intent(this, WeaponCategory.class);
     	

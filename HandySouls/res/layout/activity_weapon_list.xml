@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.handysouls.WeaponList"
     tools:ignore="MergeRootFrame"
-    android:background="#AA000000">
+    android:background="#FF000000">
     <RelativeLayout
         android:id="@+id/weapon_list_container"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        style="@android:style/Widget.ProgressBar.Small"
-	        android:layout_gravity="center"
+	        android:layout_centerInParent="true"
 	        />
 	    <ListView
 	        android:id="@android:id/list"
@@ -35,20 +35,159 @@
 	        android:id="@+id/back_button"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:text="Back"
-	        android:onClick="back"/>
+	        android:text="@string/back"
+	        android:textSize="50sp"
+	        android:textColor="#AAFFFFFF"
+	        android:onClick="back"
+	        android:layout_alignParentBottom="true"/>
     	<ImageView
     	    android:id="@+id/weapon_image"
     	    android:layout_width="wrap_content"
     	    android:layout_height="wrap_content"
-    	    android:layout_below="@id/back_button"
     	    />
     	<TextView
         	android:id="@+id/weapon_name"
         	android:layout_width="fill_parent"
         	android:layout_height="wrap_content"
         	android:layout_toRightOf="@id/weapon_image"
+        	android:textSize="35sp"
+        	android:textColor="#FFFFFFFF"
         	/>
+    	<TextView
+    	    android:id="@+id/availability_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/acquired"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/weapon_name"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	
+    	<TextView
+    	    android:id="@+id/availability"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/weapon_name"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/availability_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/damage_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/damage"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/availability"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/damage"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/availability"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/damage_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/reqs_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/reqs"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/damage"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/reqs"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/damage"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/reqs_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/durability_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/durability"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/reqs"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/durability"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/reqs"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/durability_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
+    	
+    	<TextView
+    	    android:id="@+id/weight_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/weight"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/durability"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/weight"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/durability"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/weight_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
+    	
+    	<TextView
+    	    android:id="@+id/special_text"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:text="@string/special"
+    	    android:textSize="20sp"
+    	    android:textColor="#AA00AAFF"
+    	    android:layout_below="@id/weight"
+    	    android:layout_alignParentLeft="true"
+    	    android:paddingTop="10dp"
+    	    />
+    	<TextView
+    	    android:id="@+id/special"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_below="@id/weight"
+    	    android:textSize="20sp"
+    	    android:textColor="#AAFFFFFF"
+    	    android:layout_toRightOf="@id/special_text"
+    	    android:paddingLeft="4dp"
+    	    android:paddingTop="10dp"
+    	    />
     	
     </RelativeLayout>
 </FrameLayout>

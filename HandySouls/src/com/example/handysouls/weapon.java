@@ -1,7 +1,6 @@
 package com.example.handysouls;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
