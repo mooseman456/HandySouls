@@ -15,8 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -105,9 +103,8 @@ public class WeaponList extends ListActivity {
     	@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
     		View view;
-    		String URL;
     		LayoutInflater mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		Log.d("JSA", "Inside getView");
+    		
     		if (convertView == null) {
     			view = mInflater.inflate(R.layout.weapon_row, parent, false);
     		}
@@ -115,20 +112,17 @@ public class WeaponList extends ListActivity {
     			view = convertView;
     		}
     		
-    		TextView nameCat = (TextView) view.findViewById(R.id.weapon_name);
+    		TextView weapName = (TextView) view.findViewById(R.id.weapon_name);
     		
-    		String toastText;
+    		weapName.setText(mWArray.get(position).name);
     		
-    		nameCat.setText(mWArray.get(position).name);
-    		Drawable d = new BitmapDrawable(getResources(),mWArray.get(position).img);
     		ImageView v = (ImageView)view.findViewById(R.id.weapon_image);
     		v.setImageBitmap(mWArray.get(position).img);
     		
     		weaponPicked wp = new weaponPicked(mWArray.get(position));
     		v.setClickable(true);
     		view.setOnClickListener(wp);
-    		//d.setBounds(10, 10, 10, 10);
-    		//nameCat.setCompoundDrawables(d, null, null, null);
+    		
     		return view;
     	}
 	}
@@ -219,8 +213,6 @@ public class WeaponList extends ListActivity {
 			return mWArray;
 		}
 		
-		protected void onProgressUpdate(String... values){
-		}
 		
 		protected void onPostExecute(ArrayList<weapon> array) {
 			setListAdapter(new weaponList(getApplicationContext()));
@@ -243,6 +235,7 @@ public class WeaponList extends ListActivity {
 			container.setVisibility(View.GONE);
 			weaponView.setVisibility(View.VISIBLE);
 			back.setVisibility(View.VISIBLE);
+			
 			back.setOnClickListener(new OnClickListener() {
 
 				@Override
